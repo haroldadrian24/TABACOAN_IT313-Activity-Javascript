@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Writing DOM</title>
+  <style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #3C3D37;
+    }
+    #app {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    form {
+    background-color: gray;
+    padding: 20px;
+    border-radius: 10px;
+    width: 350px;
+}
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%;
+    height: 15px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 322px;
+    height: 2vh;
+}
+    input[type="submit"] {
+      background-color: #3C3D37;
+      color: #ECDFCC;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #3e8e41;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    let app = document.getElementById("app");
+    let form = document.createElement("form");
+    form.innerHTML = `
+      <h1>Register</h1>
+      <label for="firstName">First Name</label><br>
+      <input type="text" id="firstName" name="firstName"><br>
+      <label for="lastName">Last Name</label><br>
+      <input type="text" id="lastName" name="lastName"><br>
+      <label for="email">Email</label><br>
+      <input type="email" id="email" name="email"><span id="emailWarning"></span><br>
+      <label for="password">Password</label><br>
+      <input type="password" id="password" name="password"><br>
+      <label for="confirmPassword">Confirm Password</label><br>
+      <input type="password" id="confirmPassword" name="confirmPassword"><br>
+      <input type="submit" value="Register">
+    `;
+    app.appendChild(form);
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      let firstName = document.getElementById("firstName").value;
+      let lastName = document.getElementById("lastName").value;
+      let email = document.getElementById("email").value;
+      let password = document.getElementById("password").value;
+      let confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (!validateEmail(email)) {
+        document.getElementById("emailWarning").innerHTML = "Invalid email address";
+      } else if (password !== confirmPassword) {
+        alert("Passwords do not match");
+      } else {
+        alert(`Registration successful! Welcome, ${firstName} ${lastName}`);
+      }
+    });
+
+    function validateEmail(email) {
+      let re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return re.test(email);
+    }
+  </script>
+</body>
+</html>
